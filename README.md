@@ -14,7 +14,7 @@ Then log into the machine, clone the O.R.A. repository and install all dependenc
 ``` shell
 vagrant ssh
 cd /var/www
-git clone https://github.com/cocoonprojects/ora.git
+git clone git@github.com:cocoonprojects/ora.git
 cd ora/src
 composer install
 sudo ln -s vendor/phpunit/phpunit/phpunit /usr/bin/
