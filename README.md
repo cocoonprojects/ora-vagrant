@@ -29,3 +29,6 @@ vendor/bin/doctrine-module orm:schema-tool:create
 * SendMail + MailUtils
 * NodeJS
 * Bower
+
+## More
+To update Composer: `sudo composer self-update`
