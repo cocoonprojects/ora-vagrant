@@ -31,4 +31,4 @@ vendor/bin/doctrine-module orm:schema-tool:create
 * Bower
 
 ## More
-To update Composer: `sudo composer self-update`
+To update Composer: `sudo composer self-update` from the inside the virtual machine
