@@ -10,13 +10,14 @@ git clone https://github.com/cocoonprojects/ora-vagrant.git
 cd ora-vagrant
 vagrant up
 ```
-Then log into the machine, clone the O.R.A. repository and install all dependencies
+Then log into the machine, clone the O.R.A. repository, install all dependencies and setup the database
 ``` shell
 vagrant ssh
 cd /var/www
 git clone https://github.com/cocoonprojects/ora.git
 cd ora/src
 composer install
+vendor/bin/doctrine-module orm:schema:create --sql-dump
 ```
 ## Content
 * Apache Web Server + PHP 5.5
