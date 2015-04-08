@@ -18,9 +18,10 @@ git clone https://github.com/cocoonprojects/ora.git
 cd ora/src
 composer install
 ```
-Now set up all the .local configurations, including database connection settings and the run the database creation
+Now set up all the .local configurations, including database connection settings and the run the database creation (including the `event_stream` table using the sql script)
 ```
 vendor/bin/doctrine-module orm:schema-tool:create
+mysql -u ora -p oraproject
 ```
 ## Content
 * Apache Web Server + PHP 5.5
