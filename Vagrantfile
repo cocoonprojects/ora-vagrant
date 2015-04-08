@@ -191,7 +191,7 @@ config.vm.provision :shell, :path => "puphpet/shell/copy_virtualhost.sh"
 config.vm.provision :shell, :path => "puphpet/shell/nodejs_npm_bower_install.sh"
 
 #installazione di vim
-#config.vm.provision :shell, :path => "puphpet/shell/vim.sh"
+config.vm.provision :shell, :path => "puphpet/shell/vim.sh"
 
 config.vm.synced_folder "./", "/var/www", 
 	owner: "vagrant",
