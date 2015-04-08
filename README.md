@@ -18,10 +18,22 @@ git clone https://github.com/cocoonprojects/ora.git
 cd ora/src
 composer install
 ```
-Now set up all the .local configurations, including database connection settings and the run the database creation (including the `event_stream` table using the sql script)
-```
+Now set up all the .local configurations, including database connection settings and the run the database creation (using password `ora_DB!` and including the `event_stream` table using the sql script)
+``` shell
 vendor/bin/doctrine-module orm:schema-tool:create
 mysql -u ora -p oraproject
+```
+``` sql
+CREATE TABLE IF NOT EXISTS `event_stream` (
+  `eventId` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `version` int(11) NOT NULL,
+  `eventName` text COLLATE utf8_unicode_ci NOT NULL,
+  `payload` text COLLATE utf8_unicode_ci NOT NULL,
+  `occurredOn` text COLLATE utf8_unicode_ci NOT NULL,
+  `aggregate_id` text COLLATE utf8_unicode_ci NOT NULL,
+  `aggregate_type` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`eventId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
 ## Content
 * Apache Web Server + PHP 5.5
