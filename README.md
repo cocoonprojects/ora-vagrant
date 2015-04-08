@@ -15,3 +15,9 @@ Then log into the machine and clone the O.R.A. repository
 vagrant ssh
 cd /var/www
 ```
+## Content
+* Apache Web Server + PHP 5.5
+* Composer
+* MySql
+* NodeJS
+* Bower
