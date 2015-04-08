@@ -121,7 +121,7 @@ php:
         session.save_path: /var/lib/php/session
     timezone: Europe/Rome
 xdebug:
-    install: 0
+    install: '1'
     settings:
         xdebug.default_enable: '1'
         xdebug.remote_autostart: '0'
