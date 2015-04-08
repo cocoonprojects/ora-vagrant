@@ -18,3 +18,14 @@ temp/
 # Legacy ZF1
 demos/
 extras/documentation
+
+.vagrant
+html
+
+# web application
+ora
+
+# Eclipse files
+.project
+.metadata
+.settings

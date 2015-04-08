@@ -1,17 +1,15 @@
 #!/bin/bash
 
-if [ -f /usr/bin/phpunit ]; then
- echo "link phpunit gia' presente."
+if [ -L /usr/bin/phpunit ]; then
+ echo "/usr/bin/phpunit already exists"
 else
- echo "link per phpunit"
- ln -s /vagrant/src/vendor/phpunit/phpunit/phpunit /usr/bin/
- echo "...FATTO"
+ ln -s /var/www/ora/src/vendor/phpunit/phpunit/phpunit /usr/bin/
+ echo "/usr/bin/phpunit symbolic link created"
 fi
 
-if [ -f /usr/bin/behat ]; then
- echo "link behat gia' presente."
+if [ -L /usr/bin/behat ]; then
+ echo "/user/bin/behat already exists"
 else
- echo "link per behat"
- ln -s /vagrant/src/vendor/behat/behat/bin/behat /usr/bin/
- echo "...FATTO"
+ ln -s /var/www/ora/src/vendor/behat/behat/bin/behat /usr/bin/
+ echo "/usr/bin/behat symbolic link created"
 fi
