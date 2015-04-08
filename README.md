@@ -15,6 +15,8 @@ Then log into the machine, clone the O.R.A. repository and install all dependenc
 vagrant ssh
 cd /var/www
 git clone https://github.com/cocoonprojects/ora.git
+cd ora/src
+composer install
 ```
 ## Content
 * Apache Web Server + PHP 5.5
