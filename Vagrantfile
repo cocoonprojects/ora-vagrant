@@ -190,9 +190,6 @@ config.vm.provision :shell, :path => "puphpet/shell/copy_virtualhost.sh"
 #installazione delle librerie node, npm, bower
 config.vm.provision :shell, :path => "puphpet/shell/nodejs_npm_bower_install.sh"
 
-#creazione del link per phpunit e behat
-config.vm.provision :shell, :path => "puphpet/shell/testsuite_link.sh"
-
 #installazione di vim
 #config.vm.provision :shell, :path => "puphpet/shell/vim.sh"
 
