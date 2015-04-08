@@ -17,6 +17,8 @@ cd /var/www
 git clone https://github.com/cocoonprojects/ora.git
 cd ora/src
 composer install
+sudo ln -s /var/www/ora/src/vendor/phpunit/phpunit/phpunit /usr/bin/
+sudo ln -s /var/www/ora/src/vendor/behat/behat/bin/behat /usr/bin/
 ```
 Now set up all the .local configurations, including database connection settings and the run the database creation (using password `ora_DB!` and including the `event_stream` table using the sql script)
 ``` shell
