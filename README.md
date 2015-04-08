@@ -47,3 +47,4 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
 
 ## More
 To update Composer: `sudo composer self-update` from the inside the virtual machine
+To install VIM: `sudo apt-get install vim` from the inside the virtual machine
