@@ -19,5 +19,6 @@ cd /var/www
 * Apache Web Server + PHP 5.5
 * Composer
 * MySql
+* SendMail + MailUtils
 * NodeJS
 * Bower
