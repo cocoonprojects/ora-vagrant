@@ -19,6 +19,11 @@ cd ora/src
 composer install
 sudo ln -s vendor/phpunit/phpunit/phpunit /usr/bin/
 sudo ln -s vendor/behat/behat/bin/behat /usr/bin/
+sudo vim /etc/php5/cli/conf.d/20-xdebug.ini
+```
+Into the xdebug.ini file set the property
+```property
+xdebug.max_nesting_level=500
 ```
 Now set up all the `.local` configurations, including database connection settings and the run the database creation (using password `ora_DB!` and including the `event_stream` table using the sql script)
 ``` shell
