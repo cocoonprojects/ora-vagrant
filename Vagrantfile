@@ -188,7 +188,7 @@ Vagrant.configure("2") do |config|
 config.vm.provision :shell, :path => "puphpet/shell/copy_virtualhost.sh"
 
 #installazione delle librerie node, npm, bower
-config.vm.provision :shell, :path => "puphpet/shell/nodejs_npm_bower_install.sh"
+#config.vm.provision :shell, :path => "puphpet/shell/nodejs_npm_bower_install.sh"
 
 #installazione di vim
 #config.vm.provision :shell, :path => "puphpet/shell/vim.sh"
