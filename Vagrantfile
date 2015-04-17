@@ -187,18 +187,12 @@ Vagrant.configure("2") do |config|
 #copio il virtualhost di progetto
 config.vm.provision :shell, :path => "puphpet/shell/copy_virtualhost.sh"
 
-#installazione delle librerie node, npm, bower
-#config.vm.provision :shell, :path => "puphpet/shell/nodejs_npm_bower_install.sh"
-
-#installazione di vim
-#config.vm.provision :shell, :path => "puphpet/shell/vim.sh"
-
 config.vm.synced_folder "./", "/var/www", 
 	owner: "vagrant",
 	group: "www-data",
 	mount_options: ["dmode=776,fmode=776"]
 
 #configurazione del servizio mail
-config.vm.provision :shell, :path => "puphpet/shell/configure_mail_service.sh"
+#config.vm.provision :shell, :path => "puphpet/shell/configure_mail_service.sh"
 	
 end
