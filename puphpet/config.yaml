@@ -43,13 +43,14 @@ vagrantfile-local:
     vagrant:
         host: detect
 server:
-    packages: {  }
+    packages:
+        - vim
     dot_files:
         -
             bash_aliases: null
     _prevent_empty: ''
 mailcatcher:
-    install: 0
+    install: '1'
     settings:
         smtp_ip: 0.0.0.0
         smtp_port: 1025
