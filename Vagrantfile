@@ -27,20 +27,31 @@ Vagrant.configure("2") do |config|
 
   data['vm']['synced_folder'].each do |i, folder|
     if folder['source'] != '' && folder['target'] != ''
+      sync_owner = !folder['owner'].nil? ? folder['owner'] : 'www-data'
+      sync_group = !folder['group'].nil? ? folder['group'] : 'www-data'
+
       if folder['sync_type'] == 'nfs'
-        config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}", type: "nfs"
+        if Vagrant.has_plugin?('vagrant-bindfs')
+          config.vm.synced_folder "#{folder['source']}", "/mnt/vagrant-#{i}", id: "#{i}", type: 'nfs'
+          config.bindfs.bind_folder "/mnt/vagrant-#{i}", "#{folder['target']}", owner: sync_owner, group: sync_group, perms: "u=rwX:g=rwX:o=rD"
+        else
+          config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}", type: 'nfs'
+        end
       elsif folder['sync_type'] == 'smb'
-        config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}", type: "smb"
+        config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}", type: 'smb'
       elsif folder['sync_type'] == 'rsync'
-        rsync_args = !folder['rsync']['args'].nil? ? folder['rsync']['args'] : ["--verbose", "--archive", "--delete", "-z"]
+        rsync_args = !folder['rsync']['args'].nil? ? folder['rsync']['args'] : ['--verbose', '--archive', '-z']
         rsync_auto = !folder['rsync']['auto'].nil? ? folder['rsync']['auto'] : true
-        rsync_exclude = !folder['rsync']['exclude'].nil? ? folder['rsync']['exclude'] : [".vagrant/"]
+        rsync_exclude = !folder['rsync']['exclude'].nil? ? folder['rsync']['exclude'] : ['.vagrant/']
 
         config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}",
-            rsync__args: rsync_args, rsync__exclude: rsync_exclude, rsync__auto: rsync_auto, type: "rsync"
+          rsync__args: rsync_args, rsync__exclude: rsync_exclude, rsync__auto: rsync_auto, type: 'rsync', group: sync_group, owner: sync_owner
+      elsif data['vm']['chosen_provider'] == 'parallels'
+        config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}",
+          group: sync_group, owner: sync_owner, mount_options: ['share']
       else
         config.vm.synced_folder "#{folder['source']}", "#{folder['target']}", id: "#{i}",
-          group: 'www-data', owner: 'www-data', mount_options: ["dmode=775", "fmode=764"]
+          group: sync_group, owner: sync_owner, mount_options: ['dmode=775', 'fmode=774']
       end
     end
   end
@@ -184,15 +195,4 @@ Vagrant.configure("2") do |config|
     config.vagrant.host = data['vagrant']['host'].gsub(":", "").intern
   end
 
-#copio il virtualhost di progetto
-config.vm.provision :shell, :path => "puphpet/shell/copy_virtualhost.sh"
-
-config.vm.synced_folder "./", "/var/www", 
-	owner: "vagrant",
-	group: "www-data",
-	mount_options: ["dmode=776,fmode=776"]
-
-#configurazione del servizio mail
-#config.vm.provision :shell, :path => "puphpet/shell/configure_mail_service.sh"
-	
 end
