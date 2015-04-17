@@ -28,7 +28,15 @@ vagrantfile-local:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
-        synced_folder: {  }
+        synced_folder:
+            W9gztaxcK92t:
+                owner: www-data
+                group: www-data
+                source: ./
+                target: /var/www
+                sync_type: default
+                rsync:
+                    auto: 'false'
         usable_port_range: 2200..2250
     ssh:
         host: null
@@ -50,7 +58,7 @@ server:
             bash_aliases: null
     _prevent_empty: ''
 mailcatcher:
-    install: '1'
+    install: 0
     settings:
         smtp_ip: 0.0.0.0
         smtp_port: 1025
