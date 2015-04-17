@@ -47,8 +47,6 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
 * Composer
 * MySql
 * SendMail + MailUtils
-* NodeJS
-* Bower
 
 ## More
 To update Composer: `sudo composer self-update` from the inside the virtual machine
