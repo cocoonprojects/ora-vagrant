@@ -17,8 +17,8 @@ cd /var/www
 git clone git@github.com:cocoonprojects/ora.git
 cd ora/src
 composer install
-sudo ln -s vendor/phpunit/phpunit/phpunit /usr/bin/
-sudo ln -s vendor/behat/behat/bin/behat /usr/bin/
+sudo ln -s /var/www/ora/src/vendor/phpunit/phpunit/phpunit /usr/bin/
+sudo ln -s /var/www/ora/src/vendor/behat/behat/bin/behat /usr/bin/
 sudo vim /etc/php5/cli/conf.d/20-xdebug.ini
 ```
 Into the xdebug.ini file set the property
@@ -47,8 +47,6 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
 * Composer
 * MySql
 * SendMail + MailUtils
-* NodeJS
-* Bower
 
 ## More
 To update Composer: `sudo composer self-update` from the inside the virtual machine
