@@ -10,7 +10,7 @@ vagrantfile:
         network:
             private_network: 192.168.56.101
             forwarded_port:
-                vflnp_yryjr644tr81:
+                vflnp_9we32h95dc23:
                     host: '6209'
                     guest: '22'
         post_up_message: ''
@@ -32,7 +32,7 @@ vagrantfile:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            vflsf_urgpneu8c9iw:
+            vflsf_9nzcqip42das:
                 source: ./
                 target: /var/www
                 sync_type: default
@@ -84,7 +84,7 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        nxv_ne6glpzcvlfr:
+        nxv_yd8jh213v8dt:
             server_name: oraproject.dev
             server_aliases:
                 - www.oraproject.dev
@@ -101,7 +101,7 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-                nxvl_p15t1y6q2yd0:
+                nxvl_p3nfc7ybsy1f:
                     location: /
                     autoindex: off
                     try_files:
@@ -111,7 +111,7 @@ nginx:
                     fastcgi: ''
                     fastcgi_index: ''
                     fastcgi_split_path: ''
-                nxvl_086knne4ijl3:
+                nxvl_uhwjf3cathhr:
                     location: '~ \.php$'
                     autoindex: off
                     try_files:
@@ -124,7 +124,7 @@ nginx:
                     fast_cgi_params_extra:
                         - 'SCRIPT_FILENAME $request_filename'
                         - 'APPLICATION_ENV local'
-        nxv_tpidjlu0ed99:
+        nxv_2k6mxctgn780:
             server_name: oraproject.test
             server_aliases:
                 - www.oraproject.test
@@ -141,7 +141,7 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-                nxvl_l98nh0mcay53:
+                nxvl_r3wneculbnwl:
                     location: '~ \.php$'
                     autoindex: off
                     try_files:
@@ -154,7 +154,7 @@ nginx:
                     fast_cgi_params_extra:
                         - 'SCRIPT_FILENAME $request_filename'
                         - 'APPLICATION_ENV acceptance'
-                nxvl_0zzr7pr2qm8n:
+                nxvl_g5z4o4jovh0e:
                     location: /
                     autoindex: off
                     try_files:
@@ -180,7 +180,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_zysjcr58ha1x:
+        av_l9f2wzinsrvl:
             servername: awesome.dev
             serveraliases:
                 - www.awesome.dev
@@ -194,7 +194,7 @@ apache:
             ssl_chain: ''
             ssl_certs_dir: ''
             directories:
-                avd_mel3z1jtad9o:
+                avd_ffhiuzrgb7mf:
                     path: /var/www/awesome
                     options:
                         - Indexes
@@ -206,7 +206,7 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        avdfm_i4ct2aajps3v:
+                        avdfm_jx61r1htgm2h:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
@@ -284,18 +284,18 @@ mysql:
         override_options: {  }
     adminer: 0
     users:
-        mysqlnu_nnstvt3yqyw5:
+        mysqlnu_dd748zcouh6g:
             name: ora
             password: ora_DB!
     databases:
-        mysqlnd_gnb6kipxebvw:
+        mysqlnd_qk3mfdprv6qa:
             name: oraproject
             sql: ''
-        mysqlnd_ijo0840pq39q:
+        mysqlnd_ethjmmapqajh:
             name: oraproject_test
             sql: ''
     grants:
-        mysqlng_p4ugc6z3bqg1:
+        mysqlng_eksx3wnbwn73:
             user: ora
             table: '*.*'
             privileges:
@@ -327,7 +327,7 @@ sqlite:
     install: '0'
     adminer: 0
     databases:
-        sqlitenuad_sxmfgayrrcvg:
+        sqlitenuad_z4zui4suf20i:
             name: oraproject_test
             owner: vagrant
             group: ''
