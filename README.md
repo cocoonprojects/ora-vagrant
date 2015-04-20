@@ -42,11 +42,16 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
   PRIMARY KEY (`eventId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
+Map in the `.hosts` file of you machine
+``` hosts
+192.168.56.101	oraproject.dev oraproject.org
+192.168.56.101	oraproject.test oraprojecttest
+```
 ## Content
 * Apache Web Server + PHP 5.5
 * Composer
 * MySql
-* SendMail + MailUtils
+* MailCatcher
 
 ## More
 To update Composer: `sudo composer self-update` from the inside the virtual machine
