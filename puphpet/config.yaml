@@ -1,20 +1,23 @@
----
-vagrantfile-local:
+vagrantfile:
+    target: local
     vm:
-        box: hashicorp/precise32
-        box_url: hashicorp/precise32
-        hostname: null
+        box: puphpet/ubuntu1404-x64
+        box_url: puphpet/ubuntu1404-x64
+        hostname: ''
         memory: '512'
+        cpus: '1'
         chosen_provider: virtualbox
         network:
-           private_network: 192.168.56.111
-           forwarded_port: { }
+            private_network: 192.168.56.101
+            forwarded_port:
+                vflnp_yryjr644tr81:
+                    host: '6209'
+                    guest: '22'
+        post_up_message: ''
         provider:
             virtualbox:
                 modifyvm:
                     natdnshostresolver1: on
-                setextradata:
-                    VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root: 1
             vmware:
                 numvcpus: 1
             parallels:
@@ -22,14 +25,31 @@ vagrantfile-local:
         provision:
             puppet:
                 manifests_path: puphpet/puppet
-                manifest_file: manifest.pp
+                manifest_file: site.pp
                 module_path: puphpet/puppet/modules
                 options:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
-        synced_folder: {  }
-        usable_port_range: 2200..2250
+        synced_folder:
+            vflsf_urgpneu8c9iw:
+                source: ./
+                target: /var/www
+                sync_type: default
+                rsync:
+                    args:
+                        - '--verbose'
+                        - '--archive'
+                        - '-z'
+                    exclude:
+                        - .vagrant/
+                        - .git/
+                    auto: 'true'
+                owner: www-data
+                group: www-data
+        usable_port_range:
+            start: 10200
+            stop: 10500
     ssh:
         host: null
         port: null
@@ -43,25 +63,112 @@ vagrantfile-local:
     vagrant:
         host: detect
 server:
-    packages: {  }
-    dot_files:
-        -
-            bash_aliases: null
-    _prevent_empty: ''
-mailcatcher:
-    install: 0
-    settings:
-        smtp_ip: 0.0.0.0
-        smtp_port: 1025
-        http_ip: 0.0.0.0
-        http_port: '1080'
-        mailcatcher_path: /usr/local/bin
-        log_path: /var/log/mailcatcher/mailcatcher.log
+    install: '1'
+    packages:
+        - vim
+users_groups:
+    install: '1'
+    groups: {  }
+    users: {  }
 firewall:
     install: '1'
-    rules: null
-apache:
+    rules: {  }
+cron:
     install: '1'
+    jobs: {  }
+nginx:
+    install: '1'
+    settings:
+        default_vhost: 1
+        proxy_buffer_size: 128k
+        proxy_buffers: '4 256k'
+    upstreams: {  }
+    vhosts:
+        nxv_ne6glpzcvlfr:
+            server_name: oraproject.dev
+            server_aliases:
+                - www.oraproject.dev
+                - oraproject.org
+            www_root: /var/www/ora/src/public
+            listen_port: '80'
+            index_files:
+                - index.php
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_p15t1y6q2yd0:
+                    location: /
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                nxvl_086knne4ijl3:
+                    location: '~ \.php$'
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APPLICATION_ENV local'
+        nxv_tpidjlu0ed99:
+            server_name: oraproject.test
+            server_aliases:
+                - www.oraproject.test
+                - oraprojecttest
+            www_root: /var/www/ora/src/public
+            listen_port: '80'
+            index_files:
+                - index.php
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            rewrite_to_https: '1'
+            spdy: '1'
+            locations:
+                nxvl_l98nh0mcay53:
+                    location: '~ \.php$'
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APPLICATION_ENV acceptance'
+                nxvl_0zzr7pr2qm8n:
+                    location: /
+                    autoindex: off
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - /index.php$is_args$args
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                    fast_cgi_params_extra:
+                        - 'APPLICATION_ENV acceptance'
+    proxies: {  }
+apache:
+    install: '0'
     settings:
         user: www-data
         group: www-data
@@ -70,36 +177,47 @@ apache:
         manage_group: false
         sendfile: 0
     modules:
-        - php
+        - proxy_fcgi
         - rewrite
-        - dav
-        - deflate
-        - headers
-        - vhost_alias
-        - expires
-    vhosts: { }
-    mod_pagespeed: 0
-    mod_spdy: 0
-nginx:
-    install: 0
     vhosts:
-        O3QvWUp1aMKf:
-            server_name: awesome.dev
-            server_aliases:
+        av_zysjcr58ha1x:
+            servername: awesome.dev
+            serveraliases:
                 - www.awesome.dev
-            www_root: /var/www/awesome.dev
-            listen_port: '80'
-            index_files:
-                - index.html
-                - index.htm
-                - index.php
-            envvars:
+            docroot: /var/www/awesome
+            port: '80'
+            setenv:
                 - 'APP_ENV dev'
+            custom_fragment: ''
             ssl_cert: ''
             ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            directories:
+                avd_mel3z1jtad9o:
+                    path: /var/www/awesome
+                    options:
+                        - Indexes
+                        - FollowSymlinks
+                        - MultiViews
+                    allow_override:
+                        - All
+                    require:
+                        - 'all granted'
+                    custom_fragment: ''
+                    files_match:
+                        avdfm_i4ct2aajps3v:
+                            path: \.php$
+                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
+                            custom_fragment: ''
+                            provider: filesmatch
+                    provider: directory
 php:
     install: '1'
-    version: '55'
+    settings:
+        version: '56'
+    fpm_settings:
+        port: 9000
     composer: '1'
     composer_home: ''
     modules:
@@ -107,19 +225,18 @@ php:
             - cli
             - intl
             - mcrypt
-            - gd
+            - curl
             - mbstring
             - mysql
-            - curl
-        pear:
-            - Console_GetoptPlus
-            - XML_Util2
+            - sqlite
+            - gd
+        pear: {  }
         pecl: {  }
     ini:
         display_errors: On
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
-    timezone: Europe/Rome
+        date.timezone: UTC
 xdebug:
     install: '1'
     settings:
@@ -129,58 +246,104 @@ xdebug:
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
         xdebug.remote_port: '9000'
+xhprof:
+    install: '0'
+wpcli:
+    install: '0'
+    version: ''
 drush:
-    install: 0
+    install: '0'
+    version: null
+ruby:
+    install: '1'
+    versions: {  }
+python:
+    install: '1'
+    packages: {  }
+    versions: {  }
+nodejs:
+    install: '0'
+    npm_packages: {  }
+hhvm:
+    install: '0'
+    nightly: 0
+    composer: '1'
+    composer_home: ''
     settings:
-        drush.tag_branch: 6.x
+        host: 127.0.0.1
+        port: '9000'
+    ini:
+        display_errors: On
+        error_reporting: '-1'
+    timezone: null
 mysql:
     install: '1'
-    root_password: rootDB!
-    adminer: 0
-    databases: 
-        BqaVRuTMRxu4:
-            grant:
-                - ALL
-            name: oraproject
-            host: localhost
-            user: ora
-            password: ora_DB!
-            sql_file: ''
-        bNF7ho1HejJN:
-            grant:
-                - ALL
-            host: localhost
-            name: oraproject_test
-            user: ora
-            password: ora_DB!
-            sql_file: ''
-postgresql:
-    install: 0
     settings:
+        version: '5.6'
         root_password: '123'
-        user_group: postgres
-        encoding: UTF8
-        version: '9.3'
-    databases: {  }
+        override_options: {  }
     adminer: 0
-mariadb:
-    install: 0
-    root_password: '123'
-    adminer: 0
+    users:
+        mysqlnu_nnstvt3yqyw5:
+            name: ora
+            password: ora_DB!
+    databases:
+        mysqlnd_gnb6kipxebvw:
+            name: oraproject
+            sql: ''
+        mysqlnd_ijo0840pq39q:
+            name: oraproject_test
+            sql: ''
+    grants:
+        mysqlng_p4ugc6z3bqg1:
+            user: ora
+            table: '*.*'
+            privileges:
+                - ALL
+postgresql:
+    install: '0'
+    settings:
+        global:
+            encoding: UTF8
+            version: '9.3'
+        server:
+            postgres_password: '123'
     databases: {  }
-    version: '10.0'
+    users: {  }
+    grants: {  }
+    adminer: 0
 mongodb:
-    install: 0
+    install: '0'
     settings:
         auth: 1
+        bind_ip: 127.0.0.1
         port: '27017'
     databases: {  }
 redis:
-    install: 0
+    install: '0'
     settings:
         conf_port: '6379'
+sqlite:
+    install: '0'
+    adminer: 0
+    databases:
+        sqlitenuad_sxmfgayrrcvg:
+            name: oraproject_test
+            owner: vagrant
+            group: ''
+            sql_file: /var/www/ora/tests/sql/init.sql
+            mode: '755'
+mailcatcher:
+    install: '1'
+    settings:
+        smtp_ip: 0.0.0.0
+        smtp_port: 1025
+        http_ip: 0.0.0.0
+        http_port: '1080'
+        mailcatcher_path: /usr/local/rvm/wrappers/default
+        from_email_method: inline
 beanstalkd:
-    install: 0
+    install: '0'
     settings:
         listenaddress: 0.0.0.0
         listenport: '13000'
@@ -192,7 +355,20 @@ beanstalkd:
     beanstalk_console: 0
     binlogdir: /var/lib/beanstalkd/binlog
 rabbitmq:
-    install: 0
+    install: '0'
     settings:
         port: '5672'
+    users: {  }
+    vhosts: {  }
+    plugins: {  }
+elastic_search:
+    install: '0'
+    settings:
+        version: 1.4.1
+        java_install: true
+solr:
+    install: '0'
+    settings:
+        version: 4.10.2
+        port: '8984'
 
