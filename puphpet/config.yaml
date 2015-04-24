@@ -89,7 +89,7 @@ nginx:
             server_aliases:
                 - www.oraproject.dev
                 - oraproject.org
-            www_root: /var/www/ora/src/public
+            www_root: /var/www/ora/public
             listen_port: '80'
             index_files:
                 - index.php
@@ -129,7 +129,7 @@ nginx:
             server_aliases:
                 - www.oraproject.test
                 - oraprojecttest
-            www_root: /var/www/ora/src/public
+            www_root: /var/www/ora/public
             listen_port: '80'
             index_files:
                 - index.php
