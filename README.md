@@ -40,11 +40,11 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
 ```
 Map in the `.hosts` file of you machine
 ``` hosts
-192.168.56.101	oraproject.dev oraproject.org
-192.168.56.101	oraproject.test oraprojecttest
+192.168.56.101	oraproject.dev
+192.168.56.101	oraproject.test
 ```
 ## Content
-* Apache Web Server + PHP 5.5
+* Nginx + PHP 5.6
 * Composer
 * MySql
 * MailCatcher
