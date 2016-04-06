@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerName {{ server_name_virtual_host_2 }}
+    DocumentRoot "{{ application_root_dir_2 }}"
+
+    SetEnv APPLICATION_ENV "{{ application_env_2 }}"
+
+    {% for item in server_aliases_2 %}
+        ServerAlias {{ item }}
+    {% endfor %}
+
+    CustomLog /var/log/apache2/{{ server_name_virtual_host_2 }}-access.log combined
+    ErrorLog /var/log/apache2/{{ server_name_virtual_host_2 }}-error.log
+    <Directory "{{ application_root_dir }}">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>

@@ -2,6 +2,12 @@
     ServerName {{ server_name_virtual_host }}
     DocumentRoot "{{ application_root_dir }}"
 
+    SetEnv APPLICATION_ENV "{{ application_env }}"
+
+    {% for item in server_aliases %}
+        ServerAlias {{ item }}
+    {% endfor %}
+
     CustomLog /var/log/apache2/{{ server_name_virtual_host }}-access.log combined
     ErrorLog /var/log/apache2/{{ server_name_virtual_host }}-error.log
     <Directory "{{ application_root_dir }}">
