@@ -1,17 +1,46 @@
-dir = File.dirname(File.expand_path(__FILE__))
-
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 require 'yaml'
-require "#{dir}/puphpet/ruby/deep_merge.rb"
 
-configValues = YAML.load_file("#{dir}/puphpet/config.yaml")
+# Load up our vagrant config files -- vagrantconfig.yml first
+_config = YAML.load(File.open(File.join(File.dirname(__FILE__), "vagrantconfig.yml"), File::RDONLY).read)
+CONF = _config
 
-if File.file?("#{dir}/puphpet/config-custom.yaml")
-  custom = YAML.load_file("#{dir}/puphpet/config-custom.yaml")
-  configValues.deep_merge!(custom)
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.hostname = CONF["name"]
+
+  config.vm.network "private_network", ip: CONF["ipaddress"]
+
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  config.ssh.forward_agent = true
+
+  unless Vagrant.has_plugin?("vagrant-hostsupdater")
+    raise 'vagrant-hostsupdater plugin not installed, run "vagrant plugin install vagrant-hostsupdater"'
+  end
+
+  config.hostsupdater.remove_on_suspend = true
+  config.hostsupdater.aliases = [
+    CONF["name"], "oraproject.dev", "oraproject.test"
+  ]
+
+  config.vm.synced_folder "./", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc', 'actimeo=1']
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", CONF["ram"]]
+    vb.customize ["modifyvm", :id, "--cpus", CONF["cpus"]]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
+
+  config.vm.provider "vmware_fusion" do |v|
+    v.vmx["memsize"] = CONF["ram"]
+    v.vmx["numvcpus"] = CONF["cpus"]
+  end
+
+  config.vm.provision :shell, :path => "vagrant/scripts/install-ansible.sh", :args => "/var/www/vagrant"
+  config.vm.provision :shell, :path => "vagrant/scripts/run-ansible.sh", :args => "/var/www/vagrant"
+
 end
-
-data = configValues['vagrantfile']
-
-Vagrant.require_version '>= 1.6.0'
-
-eval File.read("#{dir}/puphpet/vagrant/Vagrantfile-#{data['target']}")

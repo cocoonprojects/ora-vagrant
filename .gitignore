@@ -30,3 +30,5 @@ ora
 .project
 .metadata
 .settings
+
+vagrantconfig.yml
