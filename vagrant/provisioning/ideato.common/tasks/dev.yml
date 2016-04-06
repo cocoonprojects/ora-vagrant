@@ -1,0 +1,53 @@
+---
+
+- name: copy all dotfiles to vagrant home
+  copy: src={{ item }} dest=/home/vagrant/
+  with_fileglob:
+    - dot/.git-*
+    - dot/.bash*
+
+- name: install common package
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - curl
+    - vim
+    - ant
+
+- name: install dependencies
+  apt: >
+    pkg={{ item }}
+    state=present
+  sudo: yes
+  with_items:
+    - libsqlite3-dev
+    - ruby-dev
+    - ruby1.9.1-dev
+
+- name: install rvm key
+  shell: >
+    curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+  sudo: yes
+
+- name: install rvm
+  shell: >
+    curl -sSL https://get.rvm.io | bash -s stable --ruby
+  sudo: yes
+
+- name: install rvm
+  shell: >
+    source /home/vagrant/.rvm/scripts/rvm
+  sudo: yes
+
+- name: gem
+  shell: >
+    gem install mailcatcher
+    creates=/usr/local/bin/mailcatcher
+  sudo: yes
+
+- name: add mailcatcher starting command in rc.local
+  lineinfile: >
+    dest=/etc/rc.local
+    insertbefore='^exit'
+    line="/usr/local/bin/mailcatcher --http-ip=0.0.0.0"
+  sudo: yes
