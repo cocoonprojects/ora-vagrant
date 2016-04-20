@@ -6,6 +6,17 @@
     - dot/.git-*
     - dot/.bash*
 
+- name: copy ssh config in .ssh
+  copy: src={{ item }} dest=/home/vagrant/.ssh
+  with_fileglob:
+    - ssh/config
+    - ssh/*.pem
+
+- name: change ssh keys permission
+  file: path={{ item }} owner=vagrant group=vagrant mode=0400
+  with_fileglob:
+    - /home/vagrant/.ssh/*.pem
+
 - name: install common package
   apt: name={{ item }} state=present
   with_items:
@@ -24,6 +35,14 @@
     - ruby-dev
     - ruby1.9.1-dev
 
+- name: install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+  creates: /home/vagrant/.nvm
+  become: yes
+  become_user: vagrant
+
+#
 # - name: install rvm key
 #   shell: >
 #     curl -sSL https://rvm.io/mpapis.asc | gpg --import -

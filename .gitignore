@@ -22,9 +22,14 @@ extras/documentation
 .vagrant
 html
 puphpet/files/dot/
+vagrant/provisioning/playbooks.retry
+vagrant/provisioning/ideato.common/files/ssh/*.pem
 
 # web application
 ora
+
+#angular app
+ora-angularjs
 
 # Eclipse files
 .project

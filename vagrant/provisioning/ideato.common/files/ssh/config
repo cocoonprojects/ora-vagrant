@@ -1,0 +1,17 @@
+ Host ideato_bastion
+    HostName 52.28.165.153
+    IdentitiesOnly yes
+    User ec2-user
+    Port 9760
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    IdentityFile ~/.ssh/ideato_bastion.pem
+    LogLevel quiet
+
+ Host 10.250.2.44
+    User cocoon
+    StrictHostKeyChecking no
+    LogLevel quiet
+    UserKnownHostsFile /dev/null
+    ProxyCommand ssh -W %h:%p ideato_bastion
+    IdentityFile ~/.ssh/cocoon_staging.pem
