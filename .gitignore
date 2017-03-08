@@ -26,7 +26,7 @@ vagrant/provisioning/playbooks.retry
 vagrant/provisioning/ideato.common/files/ssh/*.pem
 
 # web application
-ora
+www
 
 #angular app
 ora-angularjs
