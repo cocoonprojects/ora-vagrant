@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     "proxy.welo.dev"
   ]
 
-  config.vm.synced_folder "./", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc', 'actimeo=1']
+  config.vm.synced_folder "./www", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc', 'actimeo=1']
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", CONF["ram"]]
@@ -45,7 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.vmx["numvcpus"] = CONF["cpus"]
   end
 
-  config.vm.provision :shell, :path => "vagrant/scripts/install-ansible.sh", :args => "/var/www/vagrant"
-  config.vm.provision :shell, :path => "vagrant/scripts/run-ansible.sh", :args => "/var/www/vagrant"
+  config.vm.provision :shell, :path => "vagrant/scripts/install-ansible.sh", :args => "/vagrant/vagrant"
+  config.vm.provision :shell, :path => "vagrant/scripts/run-ansible.sh", :args => "/vagrant/vagrant"
 
 end

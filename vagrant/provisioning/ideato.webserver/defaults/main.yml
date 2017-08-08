@@ -6,14 +6,14 @@ server_name_virtual_host: oraproject.dev
 server_aliases:
   - www.oraproject.dev
   - oraproject.org
-application_root_dir: /var/www/ora/public
+application_root_dir: /var/www/backend/public
 application_env: local
 
 server_name_virtual_host_2: oraproject.test
 server_aliases_2:
   - www.oraproject.test
   - oraprojecttest
-application_root_dir_2: /var/www/ora/public
+application_root_dir_2: /var/www/backend/public
 application_env_2: acceptance
 
 # server_name_virtual_host_2: oraproject.test
