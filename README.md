@@ -38,11 +38,7 @@ CREATE TABLE IF NOT EXISTS `event_stream` (
   PRIMARY KEY (`eventId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 ```
-Map in the `.hosts` file of you machine
-``` hosts
-192.168.56.101	oraproject.dev
-192.168.56.101	oraproject.test
-```
+
 ## Content
 * Nginx + PHP 5.6
 * Composer
