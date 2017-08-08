@@ -24,7 +24,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.hostsupdater.remove_on_suspend = true
   config.hostsupdater.aliases = [
-    CONF["name"], "oraproject.dev", "oraproject.test"
+    CONF["name"],
+    "oraproject.dev",
+    "oraproject.test",
+    "api.welo.dev",
+    "welo.dev",
+    "proxy.welo.dev"
   ]
 
   config.vm.synced_folder "./", "/var/www", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp', 'fsc', 'actimeo=1']
