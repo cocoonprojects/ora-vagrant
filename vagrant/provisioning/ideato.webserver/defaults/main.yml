@@ -11,16 +11,8 @@ application_env: local
 
 server_name_virtual_host_2: oraproject.test
 server_aliases_2:
-  - www.oraproject.test
   - oraprojecttest
 application_root_dir_2: /var/www/backend/public
 application_env_2: acceptance
 
-# server_name_virtual_host_2: oraproject.test
-# application_root_dir: /var/www/ora/public
-# application_env: local
-
-
-# php_ppa_54: php5-oldstable
-#php_ppa: php5
-php_ppa: php5-5.6
+php_ppa: php56

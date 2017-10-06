@@ -1,7 +1,7 @@
  Host ideato_bastion
     HostName 52.28.165.153
     IdentitiesOnly yes
-    User ec2-user
+    User ideato
     Port 9760
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null

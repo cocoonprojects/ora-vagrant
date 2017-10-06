@@ -39,7 +39,7 @@
 
 #php55
 - name: add php55 or php56 ppa
-  apt_repository: repo=ppa:ondrej/{{ php_ppa }}
+  apt_repository: repo=ppa:ondrej/php
   when: ansible_distribution_release == "trusty"
 
 #apt update
@@ -49,25 +49,25 @@
 - name: install PHP5 packages
   apt: name={{ item }} state=latest
   with_items:
-    - php5
+    - php56
     - libapache2-mod-php5
-    - php5-cli
-    - php5-dev
-    - php5-mysql
+    - php56-cli
+    - php56-dev
+    - php56-mysql
     - php-pear
-    - php5-mcrypt
-    - php5-gd
-    - php5-curl
-    - php5-xdebug
-    - php5-memcache
-    - php5-memcached
-    - php5-readline
-    - php5-sqlite
-    - php5-common
-    - php5-dev
-    - php5-imagick
-    - php5-intl
-    - php5-xmlrpc
+    - php56-mcrypt
+    - php56-gd
+    - php56-curl
+    - php56-xdebug
+    - php56-memcache
+    - php56-memcached
+    - php56-readline
+    - php56-sqlite
+    - php56-common
+    - php56-dev
+    - php56-imagick
+    - php56-intl
+    - php56-xmlrpc
 
 - file: path=/etc/php5/mods-available/custom.ini state=touch
 - ini_file: dest=/etc/php5/mods-available/custom.ini
